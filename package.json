@@ -14,10 +14,13 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "axios": "^1.3.2",
+    "dotenv": "^16.0.3",
     "pinia": "^2.0.30",
+    "vee-validate": "^4.9.3",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
-    "vue3-toastify": "^0.1.8"
+    "vue3-toastify": "^0.1.8",
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

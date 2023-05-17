@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import { useAuthStore } from "@/stores/auth";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,38 +22,38 @@ const router = createRouter({
       component: () => import("../views/PolizasView.vue"),
     },
     {
-      path: '/token',
-      name: 'login',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/LoginView.vue')
+      path: "/login",
+      name: "login",
+      component: () => import("../views/LoginView.vue"),
     },
     {
-      path: '/poliza/create',
-      name: '/create',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/PolizaCreateView.vue')
+      path: "/poliza/create",
+      name: "/create",
+      component: () => import("../views/PolizaCreateView.vue"),
     },
     {
-      path: '/poliza/:id',
-      name: '/update',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/PolizaUpdateView.vue')
+      path: "/poliza/:id",
+      name: "/update",
+      component: () => import("../views/PolizaUpdateView.vue"),
     },
     {
-      path: '/poliza/view/:id',
-      name: '/view',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/PolizaReadView.vue')
-    }
+      path: "/poliza/view/:id",
+      name: "/view",
+      component: () => import("../views/PolizaReadView.vue"),
+    },
   ],
+});
+
+router.beforeEach(async (to) => {
+  // redirigir a la página de inicio de sesión si no ha iniciado sesión e intenta acceder a una página restringida
+  const publicPages = ["/login"];
+  const authRequired = !publicPages.includes(to.path);
+  const auth = useAuthStore();
+
+  if (authRequired && !auth.user) {
+    auth.returnUrl = to.fullPath;
+    return "/login";
+  }
 });
 
 export default router;

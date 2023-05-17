@@ -14,8 +14,8 @@ export const useUserStore = defineStore("user", {
     async loginUser(username, password) {
       this.loadingUser = true;
 
-      let url = "http://127.0.0.1:8085/login";
-
+      let url = import.meta.env.VITE_API_URL+"/login";
+      console.log("la url desde .env:" + import.meta.env.VITE_API_URL) // 123
       try {
         const userData = {};
         userData.username = username;
